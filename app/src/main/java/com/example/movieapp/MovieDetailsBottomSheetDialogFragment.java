@@ -125,11 +125,35 @@ public class MovieDetailsBottomSheetDialogFragment extends BottomSheetDialogFrag
                     addToWatchListButton = view.findViewById(R.id.addToWatchListButton);
 
                     addToWatchListButton.setOnClickListener(v -> {
-                        // Add the movie to the watch list
+
+                        //getting the watch list so it can be checked
+                        List<String> watchList = WatchListService.getInstance().getWatchList();
 
 
-                        // Show a toast indicating that the movie has been added to the watch list
-                        Toast.makeText(getContext(), "Added to watch list:" + title, Toast.LENGTH_SHORT).show();
+
+
+                            //if watch list contains the current title
+                            if(watchList.contains(title)){
+
+                                // Show a toast indicating that the movie is already in the watch list
+                                Toast.makeText(getContext(), "Movie is Already in the Watch List:" + title, Toast.LENGTH_SHORT).show();
+
+                            }
+                            //else for if movie is not in the watch list
+                            else{
+                                // Add the movie to the watch list
+                                WatchListService.getInstance().addMovieToWatchList(title);
+                                // Show a toast indicating that the movie has been added to the watch list
+                                Toast.makeText(getContext(), "Added to Watch List:" + title, Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+
+
+
+
+
                     });
 
 

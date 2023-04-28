@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
             public void onClick(View view) {
                 // Get the instance of the WatchListService that was used to add movies
                 WatchListService watchListService = WatchListService.getInstance();
-                List<Movie> watchList = watchListService.getWatchList();
+                List<String> watchList = watchListService.getWatchList();
 
                 if (watchList.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Watch list is empty", Toast.LENGTH_SHORT).show();
@@ -100,8 +100,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
 
                 // Create a StringBuilder object to build a string of movie titles from the watch list
                 StringBuilder sb = new StringBuilder();
-                for (Movie movie : watchList) {
-                    sb.append(movie.getTitle()).append("\n");
+                for (String movie : watchList) {
+                    sb.append(movie);
+                    sb.append("\n");
                 }
 
                 // Make toast to the screen to show watch list to the user
@@ -257,43 +258,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnMo
     }
 
 
-    private BroadcastReceiver watchListUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
 
 
-// ...
-            MainActivity.this.startService(intent);
 
-            if (intent.getAction().equals(WatchListService.ACTION_WATCH_LIST_UPDATED)) {
-                // Update the watch list UI here
-                WatchListService watchListService = WatchListService.getInstance();
-                List<Movie> watchList = watchListService.showWatchList();
-                // Create a StringBuilder object to build a string of movie titles from the watch list
-                StringBuilder sb = new StringBuilder();
-                for (Movie movie : watchList) {
-                    sb.append(movie.getTitle()).append("\n");
-                }
-                // Show the watch list in a Toast
-                Toast.makeText(MainActivity.this, "Watch List Updated:\n" + sb.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
-    //on resume method for broadcaster
-    @Override
-    protected void onResume() {
-        super.onResume();
-        LocalBroadcastManager.getInstance(this).registerReceiver(watchListUpdateReceiver, new IntentFilter(WatchListService.ACTION_WATCH_LIST_UPDATED));
-    }
-
-
-    //on pause method for broadcaster
-    @Override
-    protected void onPause() {
-        super.onPause();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(watchListUpdateReceiver);
-    }
 
 
 

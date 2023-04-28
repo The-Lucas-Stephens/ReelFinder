@@ -11,10 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//************* Tried to get watch list function to work but could not **************************
 
-
-//***************** Ended up not using this ****************
 
 //Class used to add movies to watch list
 public class WatchListService extends Service {
@@ -26,11 +23,9 @@ public class WatchListService extends Service {
         return null;
     }
 
-    public static final String ACTION_WATCH_LIST_UPDATED = "com.example.movieapp.ACTION_WATCH_LIST_UPDATED";
 
-    public static final String ACTION_ADD_MOVIE = "com.example.movieapp.ACTION_ADD_MOVIE";
     private static WatchListService instance;
-    private ArrayList<Movie> watchList = new ArrayList<>();
+    private ArrayList<String> watchList = new ArrayList<>();
 
     // Private constructor to prevent instantiation
     public WatchListService() {}
@@ -43,7 +38,7 @@ public class WatchListService extends Service {
         return instance;
     }
 
-    public List<Movie> showWatchList() {
+    public List<String> showWatchList() {
         return watchList;
     }
 
@@ -51,15 +46,12 @@ public class WatchListService extends Service {
     // Add a movie to the watchlist
     public void addMovieToWatchList(String title) {
         // Create a new Movie object with the given title
-        Movie movie = new Movie(title);
+        //Movie movie = new Movie(title);
 
         // Add the movie to the watch list
-        watchList.add(movie);
+        watchList.add(title);
 
-        // Send a broadcast message to notify the app that the watch list has been updated
-        Intent intent = new Intent(ACTION_WATCH_LIST_UPDATED);
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
-        broadcastManager.sendBroadcast(intent);
+
     }
 
 
@@ -67,32 +59,12 @@ public class WatchListService extends Service {
 
 
     // Get the watchlist
-    public ArrayList<Movie> getWatchList() {
+    public ArrayList<String> getWatchList() {
         return watchList;
     }
 
     // Check if a movie is in the watchlist
-    public boolean isMovieInWatchList(Movie movie) {
-        for (Movie m : watchList) {
-            if (m.getId() == movie.getId()) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    //get watch list as a string to be displayed to user
-    public String getWatchListAsString() {
-        StringBuilder sb = new StringBuilder();
-        for (Movie m : watchList) {
-            sb.append(m.getTitle()).append(", ");
-        }
-        if (sb.length() > 0) {
-            sb.delete(sb.length() - 2, sb.length()); // Remove last comma and space
-            return sb.toString();
-        } else {
-            return "Watchlist is empty";
-        }
-    }
+
 
 }
