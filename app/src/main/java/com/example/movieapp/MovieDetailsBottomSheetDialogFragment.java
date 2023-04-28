@@ -126,7 +126,7 @@ public class MovieDetailsBottomSheetDialogFragment extends BottomSheetDialogFrag
 
                     addToWatchListButton.setOnClickListener(v -> {
                         // Add the movie to the watch list
-                        addMovieToWatchList();
+
 
                         // Show a toast indicating that the movie has been added to the watch list
                         Toast.makeText(getContext(), "Added to watch list:" + title, Toast.LENGTH_SHORT).show();
@@ -141,54 +141,7 @@ public class MovieDetailsBottomSheetDialogFragment extends BottomSheetDialogFrag
 
         return view;
     }
-    private void addMovieToWatchList() {
-        // Create an Intent to add the movie to the watch list
-        Intent intent = new Intent(getContext(), WatchListService.class);
-        intent.putExtra("title", title);
 
-        intent.setAction(WatchListService.ACTION_ADD_MOVIE);
-
-        // Register a broadcast receiver to listen for the service's response
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(WatchListService.ACTION_WATCH_LIST_UPDATED)) {
-                    // Update the watch list UI here
-                    updateWatchListUI();
-                }
-            }
-        };
-        getContext().registerReceiver(receiver, new IntentFilter(WatchListService.ACTION_WATCH_LIST_UPDATED));
-
-        // Start the service to add the movie to the watch list
-        getContext().startService(intent);
-    }
-
-    // Method to update the watch list UI
-    private void updateWatchListUI() {
-        WatchListService watchListService = WatchListService.getInstance();
-        List<Movie> watchList = watchListService.showWatchList();
-        // Update the UI here
-        updateUiHere();
-    }
-
-
-    //update the UI method
-    private void updateUiHere() {
-        // Get the updated watch list from the service
-        WatchListService watchListService = WatchListService.getInstance();
-        List<Movie> watchList = watchListService.showWatchList();
-
-        // Create a StringBuilder object to build a string of movie titles from the watch list
-        StringBuilder sb = new StringBuilder();
-        for (Movie movie : watchList) {
-            sb.append(movie.getTitle()).append("\n");
-        }
-
-        // Show the watch list in a Toast
-        String message = "Watch List Updated:\n" + sb.toString();
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
 
 
 
