@@ -13,6 +13,9 @@ import java.util.List;
 
 //************* Tried to get watch list function to work but could not **************************
 
+
+//***************** Ended up not using this ****************
+
 //Class used to add movies to watch list
 public class WatchListService extends Service {
 
