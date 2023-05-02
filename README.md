@@ -3,4 +3,4 @@ Movie data base app that uses the movies db api to get movies and info about tho
 
 App Name: Reel Finder 
 Purpose: Mobile Apps class final 
-Developer: Lucas Stepens 
+Developer: Lucas Stephens 
